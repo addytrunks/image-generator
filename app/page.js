@@ -2,7 +2,7 @@
 
 import { Card } from '@/components/Card';
 import FormField from '@/components/FormField';
-import { connectToDB } from '@/utils/connectToDB';
+import Loader from '@/components/Loader';
 import { useEffect, useState } from 'react'
 
 const RenderCards = ({ data, title }) => {
@@ -21,9 +21,11 @@ export default function Home() {
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true)
       const res = await fetch('/api/posts',{method:'GET'})
       const result = await res.json()
       setAllPosts(result.data.reverse())
+      setLoading(false)
     }
     getData();
   },[])
@@ -35,11 +37,9 @@ export default function Home() {
   const [searchText, setSearchText] = useState('');
 
    const handleSearch = (e) => {
-
     setSearchText(e.target.value)
     const filteredPosts = allPosts.filter(post => post.prompt.toLowerCase().includes(searchText.toLowerCase()))
     setSearchPosts(filteredPosts)
-    console.log(searchPosts)
   }
 
   
