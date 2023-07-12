@@ -14,7 +14,7 @@ cloudinary.config({
 export const GET = async(req,res) => {
     try {
         const posts = await Post.find({})
-        return new NextResponse.json({success:true,data:posts})
+        return NextResponse.json({success:true,data:posts})
     } catch (error) {
         return new NextResponse.json({success:false,data:error.message})
     }
